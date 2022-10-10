@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const fetcher = async (url: string, options: any = {}) => {
   let response = await fetch(url, options);

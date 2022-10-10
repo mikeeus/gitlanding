@@ -1,9 +1,8 @@
 import ReactMarkdown from "react-markdown";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import useReadme from "../hooks/useReadme";
+import { useState } from "react";
+import useReadme from "../../hooks/useReadme";
 import rehypeRaw from "rehype-raw";
 import Link from "next/link";
 

@@ -18,8 +18,22 @@ const Home: NextPage = () => {
       <main className={styles.content}>
         <h1>GitLanding</h1>
         <p>
-          GitLanding automatically generates styled landing pages for open
-          source projects on GitHub using their README.md files.
+          GitLanding automatically generates a clean and user friendly landing
+          page for open source projects that can be shared with non technical
+          users that may find github confusing to navigate.
+        </p>
+
+        <p>
+          To get get a link for a project simply replace `github` with
+          `gitlanding`. For example, for{" "}
+          <pre>
+            https://<b>github</b>
+            .com/microsoft/vscode
+          </pre>
+          becomes{" "}
+          <pre>
+            https://<b>gitlanding</b>.com/microsoft/vscode
+          </pre>
         </p>
 
         <p>

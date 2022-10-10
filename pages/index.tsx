@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
@@ -10,7 +9,7 @@ const Home: NextPage = () => {
   const { loading, markdown } = useReadme("mikeeus", "gitlanding");
 
   return (
-    <div className={styles.container}>
+    <div className="container">
       <Head>
         <title>GitLanding</title>
         <meta
@@ -20,7 +19,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.content}>
+      <main className="content">
         {loading ? <p>Loading...</p> : null}
         {!loading && !markdown ? (
           <p>
@@ -32,7 +31,7 @@ const Home: NextPage = () => {
         ) : null}
       </main>
 
-      <footer className={styles.footer}>
+      <footer className="footer">
         <Link
           href="https://mikias.net"
           target="_blank"

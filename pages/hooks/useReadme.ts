@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 const fetcher = async (url: string, options: any = {}) => {
   let response = await fetch(url, options);
@@ -20,30 +20,30 @@ export default function useReadme() {
     );
   };
 
-  const fetchReadme = async (
-    org: string | string[],
-    repo: string | string[]
-  ) => {
-    let found: string | undefined;
-    for (const filename of ["README.md", "readme.md", "Readme.md"]) {
-      if (found) {
-        break;
-      }
-      try {
-        found = await fetcher(
-          `https://raw.githubusercontent.com/${org}/${repo}/main/${filename}`
-        ).then((res) => res.text());
-        if (found && isSymbolicLink(found)) {
-          found = await fetcher(
-            `https://raw.githubusercontent.com/${org}/${repo}/main/${found}`
-          ).then((res) => res.text());
+  const fetchReadme = useCallback(
+    async (org: string | string[], repo: string | string[]) => {
+      let found: string | undefined;
+      for (const filename of ["README.md", "readme.md", "Readme.md"]) {
+        if (found) {
+          break;
         }
-      } catch (error) {
-        console.log({ error });
+        try {
+          found = await fetcher(
+            `https://raw.githubusercontent.com/${org}/${repo}/main/${filename}`
+          ).then((res) => res.text());
+          if (found && isSymbolicLink(found)) {
+            found = await fetcher(
+              `https://raw.githubusercontent.com/${org}/${repo}/main/${found}`
+            ).then((res) => res.text());
+          }
+        } catch (error) {
+          console.log({ error });
+        }
       }
-    }
-    return found;
-  };
+      return found;
+    },
+    []
+  );
 
   useEffect(() => {
     if (!router.query.org || !router.query.repo) {
@@ -57,7 +57,7 @@ export default function useReadme() {
       }
       setLoading(false);
     })();
-  }, [router]);
+  }, [router, fetchReadme]);
 
   return {
     loading,

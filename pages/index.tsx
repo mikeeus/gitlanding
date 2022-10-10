@@ -1,16 +1,9 @@
-import ReactMarkdown from "react-markdown";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
-import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
-import useReadme from "./hooks/useReadme";
-import rehypeRaw from "rehype-raw";
+import Link from "next/link";
 
 const Home: NextPage = () => {
-  const { loading, markdown } = useReadme();
-  const [theme, setTheme] = useState("splendor");
-
   return (
     <div className={styles.container}>
       <Head>
@@ -22,7 +15,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={`${styles.content} theme-${theme}`}>
+      <main className={styles.content}>
         <h1>GitLanding</h1>
         <p>
           GitLanding automatically generates styled landing pages for open
@@ -34,33 +27,37 @@ const Home: NextPage = () => {
         </p>
         <ul>
           <li>
-            <a href="/vercel/next.js">Next.js</a>
+            <Link href="/vercel/next.js">Next.js</Link>
           </li>
           <li>
-            <a href="/microsoft/vscode">VS Code</a>
+            <Link href="/microsoft/vscode">VS Code</Link>
           </li>
           <li>
-            <a href="/facebook/react">React</a>
+            <Link href="/facebook/react">React</Link>
           </li>
           <li>
-            <a href="/facebook/react-native">React Native</a>
+            <Link href="/facebook/react-native">React Native</Link>
           </li>
           <li>
-            <a href="/microsoft/TypeScript">TypeScript</a>
+            <Link href="/microsoft/TypeScript">TypeScript</Link>
           </li>
           <li>
-            <a href="/tailwindlabs/tailwindcss">Tailwind CSS</a>
+            <Link href="/tailwindlabs/tailwindcss">Tailwind CSS</Link>
           </li>
           <li>
-            <a href="/vercel/hyper">Hyper</a>
+            <Link href="/vercel/hyper">Hyper</Link>
           </li>
         </ul>
       </main>
 
       <footer className={styles.footer}>
-        <a href="https://mikias.net" target="_blank" rel="noopener noreferrer">
+        <Link
+          href="https://mikias.net"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Mikias Abera
-        </a>
+        </Link>
       </footer>
     </div>
   );

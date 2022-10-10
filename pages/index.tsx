@@ -11,7 +11,9 @@ const Home: NextPage = () => {
   return (
     <div className="container">
       <Head>
-        <title>GitLanding</title>
+        <title>
+          GitLanding | Landing Page Generator for Open Source Projects
+        </title>
         <meta
           name="description"
           content="Automatic landing page for open source projects"

@@ -20,3 +20,9 @@ Some popular open source projects that you can try GitLanding with:
 - [TypeScript](/microsoft/TypeScript)
 - [Tailwind CSS](/tailwindlabs/tailwindcss)
 - [Hyper](/vercel/hyper)
+
+Upcoming features if there is a demand for it
+
+- Ability to customize the page with typical landing page sections like a hero banner, features list, team, etc using a JSON file that you can add to your project root
+- List releases and have a 1-click download button for the latest release.
+- Support preset themes and customization

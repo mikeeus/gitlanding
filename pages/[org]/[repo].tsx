@@ -5,9 +5,11 @@ import { useState } from "react";
 import useReadme from "../../hooks/useReadme";
 import rehypeRaw from "rehype-raw";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Repo: NextPage = () => {
-  const { loading, markdown } = useReadme();
+  const router = useRouter();
+  const { loading, markdown } = useReadme(router.query.org, router.query.repo);
   const [theme, setTheme] = useState("splendor");
 
   return (

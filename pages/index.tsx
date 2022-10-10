@@ -7,10 +7,7 @@ import rehypeRaw from "rehype-raw";
 import useReadme from "../hooks/useReadme";
 
 const Home: NextPage = () => {
-  const { loading, markdown } = useReadme({
-    org: "mikeeus",
-    repo: "gitlanding",
-  });
+  const { loading, markdown } = useReadme("mikeeus", "gitlanding");
 
   return (
     <div className={styles.container}>

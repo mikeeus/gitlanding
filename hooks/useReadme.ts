@@ -9,64 +9,38 @@ const fetcher = async (url: string, options: any = {}) => {
   throw response.text();
 };
 
-export default function useReadme(repo?: { org: string; repo: string }) {
+export default function useReadme(
+  org?: string | string[],
+  repo?: string | string[]
+) {
   const [markdown, setMarkdown] = useState<string>();
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
-
-  const isSymbolicLink = (text: string) => {
-    return (
-      text && text.length < 100 && text.toLowerCase().endsWith("readme.md")
-    );
-  };
 
   const fetchReadme = useCallback(
     async (org: string | string[], repo: string | string[]) => {
-      let found: string | undefined;
-      for (const filename of ["README.md", "readme.md", "Readme.md"]) {
-        if (found) {
-          break;
-        }
-        try {
-          found = await fetcher(
-            `https://raw.githubusercontent.com/${org}/${repo}/main/${filename}`
-          ).then((res) => res.text());
-          if (found && isSymbolicLink(found)) {
-            found = await fetcher(
-              `https://raw.githubusercontent.com/${org}/${repo}/main/${found}`
-            ).then((res) => res.text());
-          }
-        } catch (error) {
-          console.log({ error });
-        }
+      try {
+        setLoading(true);
+        const response = await fetcher(
+          `https://api.github.com/repos/${org}/${repo}/readme`
+        );
+        const body = await response.json();
+        setLoading(false);
+        setMarkdown(atob(body.content));
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
       }
-      return found;
     },
     []
   );
 
   useEffect(() => {
-    if (repo) {
-      (async () => {
-        const text = await fetchReadme(repo.org, repo.repo);
-        setMarkdown(text);
-      })();
-      setLoading(false);
+    if (!org || !repo) {
       return;
     }
 
-    if (!router.query.org || !router.query.repo) {
-      return;
-    }
-
-    (async () => {
-      if (router.query.org && router.query.repo) {
-        const text = await fetchReadme(router.query.org, router.query.repo);
-        setMarkdown(text);
-      }
-      setLoading(false);
-    })();
-  }, [router, fetchReadme, repo]);
+    fetchReadme(org, repo);
+  }, [org, repo, fetchReadme]);
 
   return {
     loading,

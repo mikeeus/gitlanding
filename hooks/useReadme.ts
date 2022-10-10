@@ -9,7 +9,7 @@ const fetcher = async (url: string, options: any = {}) => {
   throw response.text();
 };
 
-export default function useReadme() {
+export default function useReadme(repo?: { org: string; repo: string }) {
   const [markdown, setMarkdown] = useState<string>();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -46,6 +46,15 @@ export default function useReadme() {
   );
 
   useEffect(() => {
+    if (repo) {
+      (async () => {
+        const text = await fetchReadme(repo.org, repo.repo);
+        setMarkdown(text);
+      })();
+      setLoading(false);
+      return;
+    }
+
     if (!router.query.org || !router.query.repo) {
       return;
     }
@@ -57,7 +66,7 @@ export default function useReadme() {
       }
       setLoading(false);
     })();
-  }, [router, fetchReadme]);
+  }, [router, fetchReadme, repo]);
 
   return {
     loading,
